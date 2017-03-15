@@ -4,6 +4,8 @@ Saul Castro
 
 Galaga/Tyrain inspired Space Shooter
 
+python 2.7 with pygame
+
 main.py to run
 
 Keyboard Controls  / PS3 Controller (Autodetected)
