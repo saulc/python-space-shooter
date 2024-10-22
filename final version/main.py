@@ -55,7 +55,7 @@ class Game:
     padding = 100
     currentLevel = 1
     timerEvent =  19
-    fireEvent = 14
+    fireEvent = pygame.event.custom_type()
 
     user = 0
     stats = 0
@@ -345,10 +345,12 @@ class Game:
                 elif event.type == pygame.JOYBUTTONUP:
                     Game.keys[Game.controllerMap[event.button]](False)
                 elif event.type == pygame.KEYDOWN:
-                    Game.keys[event.key](True)
+                    if event.key in Game.keys:
+                        Game.keys[event.key](True)
                 elif event.type == pygame.KEYUP:
-                    Game.keys[event.key](False)
-                elif event.type == Game.fireEvent:
+                     if event.key in Game.keys:
+                        Game.keys[event.key](False)
+                elif event.type == Game.fireEvent: 
                     print('firing ')
                     g = event.gun
                     if Game.stats.wepons[g] > 0: #check ammo
@@ -626,9 +628,11 @@ class Game:
             Game.isPaused = not Game.isPaused
 
     def setupKeys(self):
-        for i in range(512):
-            Game.keys.append(self.buttonNothing)
+        # for i in range(1083741905):
+        #     Game.keys.append(self.buttonNothing)
+        Game.keys = {}
 
+        print('keys: ', pygame.K_UP, pygame.K_DOWN)
 
         Game.keys[pygame.K_DOWN] = self.buttonDown
         Game.keys[pygame.K_UP] = self.buttonUp
