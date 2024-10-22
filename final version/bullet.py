@@ -89,12 +89,12 @@ class Missile(Bullet):
         self.vy = -10
         
     def update(self):
-        super().update()
 #         print (self.frame)
         self.frame = (self.rect.y // 60)  % (len(self.images) - 1 ) + 1
         self.image = self.images[self.frame]
         
         
+        super().update()
         
                 
         

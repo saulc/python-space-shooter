@@ -23,7 +23,8 @@ class Item(pygame.sprite.Sprite):
         self.eFrame = 0
         self.eFrames = []
        
-    def setEframe(self, frames): self.eFrames = frames   
+    def setEframe(self, frames): 
+        self.eFrames = frames   
         
     def getRect(self):
         return self.rect
@@ -35,7 +36,11 @@ class Item(pygame.sprite.Sprite):
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.rect.x, self.rect.y))
 
-    def bang(self): self.explode = True
+    def bang(self): 
+        self.eFrame = 0
+
+        print('e frames:', len(self.eFrames))
+        self.explode = True
     
     def update(self):
         
@@ -49,6 +54,7 @@ class Item(pygame.sprite.Sprite):
             if self.eFrame >= scale * len(self.eFrames): 
                 self.eFrame = 0
                 self.kill()
+            # print('update:', self.eFrame)
             self.image = self.eFrames[self.eFrame// scale]
           
             

@@ -24,7 +24,7 @@ import pygame, sys
 from stats import Stats
 from user import User
 from alien import *
-from bullet import Bullet, AlienBullet
+from bullet import Bullet, AlienBullet, Missile
 from level import Level, levelItem, levelMaker
 from powerup import *
 from mySounds import *
@@ -353,11 +353,17 @@ class Game:
                 elif event.type == Game.fireEvent: 
                     print('firing ')
                     g = event.gun
-                    if Game.stats.wepons[g] > 0: #check ammo
+                    if g == 3:
+                        for m in bulletList:
+                            if m.type == 3:
+                                m.bang()
+
+                    elif Game.stats.wepons[g] > 0: #check ammo
                         if Game.soundOn:
                             if g==2: Game.gamesounds.playSound(Game.missleSound)
                             elif g==1: Game.gamesounds.playSound(Game.blasterSound)
                         b = Game.user.fire(g)
+                        b.setEframe(Game.eFrames)
                         bulletList.add(b)
                         items.add(b)
                         Game.stats.shot(g)
@@ -614,6 +620,15 @@ class Game:
             e = pygame.event.Event(Game.fireEvent, gun=2)
             pygame.event.post(e)
 
+    def bang(self, pressed):
+        if pressed:
+            e = pygame.event.Event(Game.fireEvent, gun=3)
+            pygame.event.post(e)
+
+    def buttonV(self, pressed):
+        if pressed:
+            Game.user.center(Game.width//2, Game.height//2)
+
     def buttonNothing(self, pressed):
         pass
 
@@ -641,8 +656,10 @@ class Game:
         Game.keys[pygame.K_SPACE] = self.buttonSpace
         Game.keys[pygame.K_z] = self.fireOne
         Game.keys[pygame.K_x] = self.fireTwo
+        Game.keys[pygame.K_c] = self.bang
         Game.keys[pygame.K_b] = self.boom
         Game.keys[pygame.K_ESCAPE] = self.pause
+        Game.keys[pygame.K_v] = self.buttonV
 
 
     def setupController(self):

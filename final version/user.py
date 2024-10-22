@@ -40,6 +40,10 @@ class User(Item):
 #         self.drones.add(drones)
 #         
 
+    def center(self, x, y):
+        self.rect.x = x
+        self.rect.y = y 
+        
     def update(self):
        
         i = 0
